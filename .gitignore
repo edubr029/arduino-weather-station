@@ -1,3 +1,4 @@
-.vscode
+.vscode/
+dev/
 wokwi.toml
 diagram.json
