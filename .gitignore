@@ -1,4 +1,5 @@
 .vscode/
+build/
 dev/
 wokwi.toml
 diagram.json
