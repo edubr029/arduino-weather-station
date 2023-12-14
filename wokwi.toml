@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = 'build/arduino-weather-station.ino.hex'
+elf = 'build/arduino-weather-station.ino.elf'
