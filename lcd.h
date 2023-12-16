@@ -4,27 +4,36 @@
 // initialize the library by associating any needed LCD interface pin
 // with the arduino pin number it is connected to
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+LiquidCrystal lcd_d(rs, en, d4, d5, d6, d7);
+
+#define PWM_PIN 9
 
 void customChars();
 
-void startLCD(){
-  // initialize LCD and set up the number of columns and rows:
-  lcd.begin(16, 2);
-  
-  Serial.begin(9600);
-  Wire.begin();
+namespace lcd{
+  void start(){
+    // initialize LCD and set up the number of columns and rows:
+    lcd_d.begin(16, 2);
+    
+    Serial.begin(9600);
+    Wire.begin();
 
-  lcd.clear();
-  customChars();
+    lcd_d.clear();
+    customChars();
+  }
+
+  void blank(int chars){
+    for(int i = 0; i < chars; i++)
+      lcd_d.write(byte(20));
+  }
 }
 
 void customChars(){
-  // Menu Arrows
-  lcd.createChar(0, leftArrow);
-  lcd.createChar(1, rightArrow);
+    // Menu Arrows
+    lcd_d.createChar(0, leftArrow);
+    lcd_d.createChar(1, rightArrow);
 
-  // DHT Icons
-  lcd.createChar(2, waterDrop);
-  lcd.createChar(3, thermometer);
-}
+    // DHT Icons
+    lcd_d.createChar(2, waterDrop);
+    lcd_d.createChar(3, thermometer);
+  }

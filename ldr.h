@@ -41,3 +41,19 @@ void ldr_test(){
   Serial.println(lux_value); // Print the result
   delay(1000);
 }
+
+void serialLDR(){
+  Serial.print("Voltage: ");
+  Serial.print(ldr::voltage());
+  Serial.println(" V");
+
+  Serial.print("Resistance: ");
+  Serial.print(ldr::resistance());
+  Serial.println(" Ohm");
+
+  Serial.print("Lux: ");
+  Serial.print(ldr::lux());
+  Serial.println(" lux");
+
+  delay(500);
+}
