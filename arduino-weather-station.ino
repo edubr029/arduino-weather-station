@@ -50,16 +50,22 @@ namespace arrow{
 
 namespace menu{
   void main(){
-    if(button::left == HIGH) arrow::blink(0);
-    else if(button::right == HIGH) arrow::blink(1);
-    else arrow::both();
+    // if(button::left == HIGH) arrow::blink(0);
+    // else if(button::right == HIGH) arrow::blink(1);
+    // else arrow::both();
 
-    if(button::select == HIGH) lcd_d.clear();
-    else {
-      showHumidity();
-      showTemperature();
-      showTime();
-    }
+    // if(button::select == HIGH) lcd_d.clear();
+    // else {
+    //   showHumidity();
+    //   showTemperature();
+    //   showTime();
+    // }
+
+    showHumidity();
+    showTemperature();
+    showTime();
+
+    arrow::both();
   }
 
   void pressure(){
