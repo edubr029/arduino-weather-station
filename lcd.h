@@ -36,4 +36,41 @@ void customChars(){
     // DHT Icons
     lcd_d.createChar(2, waterDrop);
     lcd_d.createChar(3, thermometer);
+}
+
+namespace arrow{
+  void left(){
+      lcd_d.setCursor(0,1);
+      lcd_d.write(byte(0));
   }
+
+  void right(){
+      lcd_d.setCursor(15,1);
+      lcd_d.write(byte(1));
+  }
+
+  void both(){
+      right();
+      left();
+  }
+
+  void blink(int side){
+    // 0 - left arrow | 1 - right arrow
+      switch(side){
+          case 0:
+              left();
+              delay(500);
+              lcd_d.setCursor(0,1);
+              lcd::blank(1);
+              delay(500);
+          break;
+          case 1:
+              right();
+              delay(500);
+              lcd_d.setCursor(15,1);
+              lcd::blank(1);
+              delay(500);
+          break;
+      }
+  }
+}
