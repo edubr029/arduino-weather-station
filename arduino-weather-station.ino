@@ -7,86 +7,77 @@
 #include "bmp.h"
 #include "btn.h"
 
+// Functions Prototypes
 void showHumidity();
 void showTemperature();
 void showTime();
+void showLux();
+void showPressure();
+void showHeatIndex();
 
-namespace arrow{
-    void right(){
-        lcd_d.setCursor(0,1);
-        lcd_d.write(byte(0));
-    }
+// Menu Functions
+namespace menu{
+    void principal();
+    void pressure();
+    void lux();
+    void HI();
 
-    void left(){
-        lcd_d.setCursor(15,1);
-        lcd_d.write(byte(1));
-    }
-
-    void both(){
-        right();
-        left();
-    }
-
-    void blink(int side){
-      // 0 - left arrow | 1 - right arrow
-        switch(side){
-            case 0:
-                left();
-                delay(500);
-                lcd_d.setCursor(0,1);
-                lcd::blank(1);
-                delay(500);
-            break;
-            case 1:
-                right();
-                delay(500);
-                lcd_d.setCursor(15,1);
-                lcd::blank(1);
-                delay(500);
-            break;
+    void main(){
+        if(button::left()){
+            pressure();
+        } else if(button::right()){
+            lux();
+        } else if(button::select()){
+            HI();
+        } else {
+            principal();
         }
+    }
+
+    void principal(){
+      lcd_d.clear();
+      arrow::both();
+      showTime();
+      showHumidity();
+      showTemperature();
+    }
+    
+    void pressure(){
+      arrow::blink(0);
+      lcd_d.clear();
+      arrow::both();
+      showPressure();
+    }
+
+    void lux(){
+      arrow::blink(1);
+      lcd_d.clear();
+      arrow::both();
+      showLux();
+    }
+    
+    void HI(){
+      arrow::blink(0);
+      arrow::blink(1);
+      lcd_d.clear();
+      arrow::both();
+      showHeatIndex();
     }
 }
 
-namespace menu{
-  void main(){
-    // if(button::left == HIGH) arrow::blink(0);
-    // else if(button::right == HIGH) arrow::blink(1);
-    // else arrow::both();
-
-    // if(button::select == HIGH) lcd_d.clear();
-    // else {
-    //   showHumidity();
-    //   showTemperature();
-    //   showTime();
-    // }
-
-    showHumidity();
-    showTemperature();
-    showTime();
-
-    arrow::both();
-  }
-
-  void pressure(){
+// Station Functions
+void showHumidity(){
     lcd_d.setCursor(1,0);
-    lcd_d.print(bmp::pressure());
-    lcd_d.print("Pa");
-  }
+    lcd_d.print("Humidity: ");
+    lcd_d.print(dht::humidity());
+    lcd_d.print("%");
+}
 
-  void lux(){
+void showTemperature(){
     lcd_d.setCursor(1,1);
-    lcd_d.print("Lux");
-    lcd_d.print(ldr::lux());
-    lcd_d.print("lx");
-  }
-
-  void HI(){
-    lcd_d.setCursor(1,0);
-    lcd_d.print(dht::heat_index());
-    lcd_d.write(byte(223)); // Degree Symbol
+    lcd_d.print("Temperature: ");
+    lcd_d.print(dht::temperature());
     lcd_d.print("C");
-  }
 }
 
 void showTime(){
@@ -96,50 +87,41 @@ void showTime(){
   delay(1000);
 }
 
-void showHumidity(){
-  int hum = dht::humidity();
-
-  lcd_d.setCursor(2,1);
-  lcd_d.write(byte(2));   // Water Drop
-  lcd_d.print(hum);
-  lcd_d.print("%");
-  lcd::blank(3);
+void showLux(){
+    lcd_d.setCursor(1,1);
+    lcd_d.print("Lux: ");
+    lcd_d.print(ldr::lux());
 }
 
-void showTemperature(){
-  int temp = dht::temperature();
-  
-  lcd_d.setCursor(9,1);
-  lcd_d.write(byte(3));   // Thermometer
-  lcd_d.print(temp);
-  // lcd_d.print((int)bmp::temperature());
-  lcd_d.write(byte(223)); // Degree Symbol
-  lcd_d.print("C"); 
-  lcd::blank(1);
+void showPressure(){
+    lcd_d.setCursor(1,0);
+    lcd_d.print("Pressure: ");
+    lcd_d.print(bmp::pressure());
+    lcd_d.print("Pa");
+}
+
+void showHeatIndex(){
+    lcd_d.setCursor(1,0);
+    lcd_d.print("HI: ");
+    lcd_d.print(dht::heat_index());
+    lcd_d.write(byte(223)); // Degree Symbol
+    lcd_d.print("C");
+
 }
 
 // Arduino Default Functions
 void setup() {
-  lcd::start();
-  dht::start();
-  // bmp::start();
-  rtc::start(0); // 0 - Set the RTC with the current date and time
-                 // 1 - Set the RTC with a specific date and time
+    lcd::start();
+    dht::start();
+    // bmp::start();
+    rtc::start(0);  // 0 - Set the RTC with the current date and time
+                    // 1 - Set the RTC with a specific date and time
 
-  button::start();
+    button::start();
 }
 
 void loop() {
-  menu::main();
-  
-  // Test Functions
-  // ldr_test();
+    menu::main();
 
-  // Debug Functions
-  button::debug();
-
-  // Serial Test Functions
-  // serialBMP();
-  // serialDHT();
-  // serialRTC();
+    serialRTC();
 }

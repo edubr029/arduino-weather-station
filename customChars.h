@@ -1,4 +1,4 @@
-byte leftArrow[] = { // char 0
+byte leftArrow[] = {
   B00000,
   B00001,
   B00011,
@@ -7,9 +7,9 @@ byte leftArrow[] = { // char 0
   B00111,
   B00011,
   B00001
-};
+}; // char 0
 
-byte rightArrow[] = { // char 1
+byte rightArrow[] = {
   B00000,
   B10000,
   B11000,
@@ -18,9 +18,9 @@ byte rightArrow[] = { // char 1
   B11100,
   B11000,
   B10000
-};
+}; // char 1
 
-byte waterDrop[] = { // char 2
+byte waterDrop[] = {
   B00100,
   B00100,
   B01010,
@@ -29,9 +29,9 @@ byte waterDrop[] = { // char 2
   B10001,
   B10001,
   B01110
-};
+}; // char 2
 
-byte thermometer[] = { // char 3
+byte thermometer[] = {
   B00100,
   B01010,
   B01010,
@@ -40,4 +40,4 @@ byte thermometer[] = { // char 3
   B11111,
   B11111,
   B01110
-};
+}; // char 3
