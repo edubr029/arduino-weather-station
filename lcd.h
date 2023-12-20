@@ -36,6 +36,12 @@ void customChars(){
     // DHT Icons
     lcd_d.createChar(2, waterDrop);
     lcd_d.createChar(3, thermometer);
+    
+    // Lux Icon
+    lcd_d.createChar(4, sun);
+
+    // Pressure Icon
+    lcd_d.createChar(5, downArrow);
 }
 
 namespace arrow{
