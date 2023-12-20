@@ -39,6 +39,29 @@ namespace rtc{
       lcd_d.print("0");
     lcd_d.print(minute, DEC);
   }
+
+  void date(){
+    DateTime now = RTC.now();
+
+    int day   = now.day();
+    int month = now.month();
+
+    if(day < 10)
+      lcd_d.print("0");
+    lcd_d.print(day);
+    lcd_d.print(".");
+    if(month < 10)
+      lcd_d.print("0");
+    lcd_d.print(month);
+  }
+
+  void weekDay(){
+    DateTime now = RTC.now();
+
+    char daysOfTheWeek[7][12] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    
+    lcd_d.print(daysOfTheWeek[now.dayOfTheWeek()]);
+  }
 }
 
 void serialRTC(){
